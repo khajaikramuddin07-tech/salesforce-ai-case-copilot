@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Audit record for AI case analysis requests, responses, agent decisions, and errors.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <label>AI Interaction</label>
+    <nameField>
+        <displayFormat>AI-{000000}</displayFormat>
+        <label>AI Interaction Number</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>AI Interactions</pluralLabel>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

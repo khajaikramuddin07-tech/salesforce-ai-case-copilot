@@ -1,0 +1,15 @@
+.sfdx/
+.sf/
+.localdevserver/
+coverage/
+node_modules/
+npm-debug.log*
+.env
+.env.*
+!.env.example
+dist/
+mdapi/
+tmp/
+*.log
+.DS_Store
+Thumbs.db

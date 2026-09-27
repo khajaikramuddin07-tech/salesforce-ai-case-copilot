@@ -1,0 +1,132 @@
+<template>
+    <lightning-card title="AI Case Assistant" icon-name="standard:case">
+        <div class="slds-p-around_medium">
+            <template if:true={hasError}>
+                <div class="slds-notify slds-notify_alert slds-alert_error slds-m-bottom_medium" role="alert">
+                    <span>{errorMessage}</span>
+                </div>
+            </template>
+
+            <div class="toolbar slds-m-bottom_medium">
+                <lightning-button
+                    label="Analyze Case"
+                    variant="brand"
+                    icon-name="utility:preview"
+                    onclick={handleAnalyze}
+                    disabled={isBusy}>
+                </lightning-button>
+                <lightning-button
+                    label="Regenerate"
+                    icon-name="utility:refresh"
+                    onclick={handleAnalyze}
+                    disabled={isBusy}>
+                </lightning-button>
+            </div>
+
+            <template if:true={interaction}>
+                <div class="status-row slds-m-bottom_medium">
+                    <lightning-badge label={interaction.status}></lightning-badge>
+                    <template if:true={confidenceLabel}>
+                        <span class="confidence">{confidenceLabel}</span>
+                    </template>
+                </div>
+            </template>
+
+            <template if:true={isBusy}>
+                <lightning-spinner alternative-text="Analyzing case"></lightning-spinner>
+            </template>
+
+            <template if:true={recommendation}>
+                <section class="panel">
+                    <h3>Case Summary</h3>
+                    <p>{recommendation.summary}</p>
+                </section>
+
+                <section class="panel">
+                    <h3>Likely Issue</h3>
+                    <p>{recommendation.category}</p>
+                </section>
+
+                <section class="panel">
+                    <h3>Recommended Steps</h3>
+                    <ul>
+                        <template for:each={recommendation.recommendedActions} for:item="action">
+                            <li key={action}>{action}</li>
+                        </template>
+                    </ul>
+                </section>
+
+                <section class="panel">
+                    <h3>Proposed Resolution</h3>
+                    <lightning-textarea
+                        label="Resolution"
+                        value={editedResolution}
+                        onchange={handleResolutionChange}>
+                    </lightning-textarea>
+                </section>
+
+                <section class="panel">
+                    <h3>Draft Customer Response</h3>
+                    <lightning-textarea
+                        label="Customer Response"
+                        value={editedResponse}
+                        onchange={handleResponseChange}>
+                    </lightning-textarea>
+                </section>
+
+                <section class="panel">
+                    <h3>Knowledge Articles</h3>
+                    <template if:true={hasKnowledge}>
+                        <template for:each={recommendation.knowledgeReferences} for:item="article">
+                            <article class="evidence" key={article.id}>
+                                <strong>{article.title}</strong>
+                                <p>{article.relevance}</p>
+                            </article>
+                        </template>
+                    </template>
+                </section>
+
+                <section class="panel">
+                    <h3>Similar Resolved Cases</h3>
+                    <template if:true={hasSimilarCases}>
+                        <template for:each={recommendation.similarCases} for:item="caseItem">
+                            <article class="evidence" key={caseItem.id}>
+                                <strong>{caseItem.caseNumber}</strong>
+                                <p>{caseItem.resolution}</p>
+                            </article>
+                        </template>
+                    </template>
+                </section>
+
+                <section class="panel">
+                    <h3>Evidence Summary</h3>
+                    <p>{recommendation.reasoningSummary}</p>
+                </section>
+
+                <div class="decision-bar">
+                    <lightning-button
+                        label="Accept"
+                        variant="brand"
+                        icon-name="utility:check"
+                        onclick={handleAccept}>
+                    </lightning-button>
+                    <lightning-button
+                        label="Edit"
+                        icon-name="utility:edit"
+                        onclick={handleEdit}>
+                    </lightning-button>
+                    <lightning-button
+                        label="Reject"
+                        variant="destructive"
+                        icon-name="utility:close"
+                        onclick={handleReject}>
+                    </lightning-button>
+                </div>
+            </template>
+
+            <template if:false={recommendation}>
+                <p class="empty-state">Run analysis to generate a recommendation for agent review.</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

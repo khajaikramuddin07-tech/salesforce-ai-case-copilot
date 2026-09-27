@@ -1,0 +1,17 @@
+{
+  "requestId": "demo-payment-delay-001",
+  "case": {
+    "id": "500000000000001AAA",
+    "caseNumber": "00048291",
+    "subject": "Credit card payment posted but available credit not updated",
+    "description": "Customer submitted a $750 payment yesterday. Bank account shows payment cleared, but available credit still reflects the old balance. Customer is trying to make a travel booking today.",
+    "status": "Working",
+    "priority": "High",
+    "origin": "Phone",
+    "product": "Credit Card"
+  },
+  "agent": {
+    "id": "005000000000001AAA",
+    "name": "Demo Agent"
+  }
+}

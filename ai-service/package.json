@@ -1,0 +1,16 @@
+{
+  "name": "salesforce-ai-case-copilot-service",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Replaceable AI orchestration service for Salesforce Case recommendations.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node test/orchestrator.test.js",
+    "lint": "node --check src/errors.js && node --check src/logger.js && node --check src/orchestrator.js && node --check src/security.js && node --check src/server.js && node --check src/prompts/caseRecommendationPrompt.js && node --check src/providers/mockProvider.js && node --check src/providers/providerFactory.js && node --check src/retrieval/knowledgeRepository.js && node --check src/retrieval/similarCaseRepository.js && node --check src/validation/recommendationSchema.js && node --check test/orchestrator.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

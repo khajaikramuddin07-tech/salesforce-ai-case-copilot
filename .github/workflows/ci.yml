@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ai-service:
+    name: AI service tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm --prefix ai-service test
+      - run: npm --prefix ai-service run lint
+
+  repository-validation:
+    name: Repository validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - shell: pwsh
+        run: ./scripts/validate-project.ps1
+
+  salesforce-validation:
+    name: Salesforce metadata validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Salesforce CLI
+        run: npm install --global @salesforce/cli
+      - name: Convert source
+        run: sf project convert source --source-dir force-app --output-dir mdapi
+      - name: Optional deploy validation
+        if: ${{ secrets.SFDX_AUTH_URL != '' }}
+        shell: bash
+        run: |
+          echo "${{ secrets.SFDX_AUTH_URL }}" > auth-url.txt
+          sf org login sfdx-url --sfdx-url-file auth-url.txt --alias ci
+          sf project deploy validate --source-dir force-app --target-org ci --test-level RunLocalTests --wait 30

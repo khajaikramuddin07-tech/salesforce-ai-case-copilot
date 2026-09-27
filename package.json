@@ -1,0 +1,14 @@
+{
+  "name": "salesforce-ai-case-copilot",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Portfolio Salesforce AI Case Copilot project.",
+  "scripts": {
+    "test": "npm --prefix ai-service test",
+    "lint": "npm --prefix ai-service run lint",
+    "validate": "pwsh scripts/validate-project.ps1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
